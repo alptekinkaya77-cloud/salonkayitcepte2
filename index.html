@@ -1,9 +1,9 @@
-!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=index.php">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Randevu Takvimi | Salon Kayıt Cepte</title>
+  <title>Salon Kayıt Cepte</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,8 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
   <style>
     :root {
-      --bg: #f4efe8;
-      --panel: rgba(255, 250, 245, 0.88);
+      --panel: rgba(255, 250, 245, 0.9);
       --panel-strong: #fffaf5;
       --line: rgba(110, 71, 43, 0.12);
       --text: #3a2416;
@@ -20,17 +19,15 @@
       --primary: #c66b3d;
       --primary-dark: #9d4f28;
       --accent: #244c45;
-      --accent-soft: #d9ebe7;
       --success: #2f7d62;
       --warning: #d28a2d;
+      --danger: #ba5b5b;
       --shadow: 0 20px 45px rgba(88, 53, 31, 0.12);
       --radius-lg: 28px;
       --radius-md: 20px;
-      --radius-sm: 14px;
     }
 
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: "Outfit", sans-serif;
@@ -41,56 +38,26 @@
         linear-gradient(180deg, #f7f1ea 0%, #f2ebe3 100%);
       min-height: 100vh;
     }
-
-    .shell {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 100vh;
-    }
-
+    .shell { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
     .sidebar {
       padding: 28px 22px;
-      background: rgba(255, 248, 241, 0.78);
+      background: rgba(255, 248, 241, 0.8);
       backdrop-filter: blur(14px);
       border-right: 1px solid var(--line);
       position: sticky;
       top: 0;
       height: 100vh;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 30px;
-    }
-
+    .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; }
     .brand-mark {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
+      width: 54px; height: 54px; border-radius: 18px;
       background: linear-gradient(135deg, var(--primary), #e3a16f);
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-size: 1.35rem;
+      display: grid; place-items: center; color: #fff; font-size: 1.35rem;
       box-shadow: 0 14px 26px rgba(198, 107, 61, 0.28);
     }
-
-    .brand h1,
-    .brand p { margin: 0; }
-
-    .brand h1 {
-      font-size: 1.1rem;
-      letter-spacing: 0.02em;
-    }
-
-    .brand p {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-top: 4px;
-    }
-
+    .brand h1, .brand p, .section-head h2, .section-head p { margin: 0; }
+    .brand h1 { font-size: 1.1rem; }
+    .brand p { color: var(--muted); font-size: 0.88rem; margin-top: 4px; }
     .menu-title {
       font-size: 0.76rem;
       color: var(--muted);
@@ -98,12 +65,7 @@
       letter-spacing: 0.12em;
       margin: 26px 0 12px;
     }
-
-    .menu {
-      display: grid;
-      gap: 8px;
-    }
-
+    .menu { display: grid; gap: 8px; }
     .menu a {
       text-decoration: none;
       color: var(--text);
@@ -114,66 +76,46 @@
       gap: 12px;
       font-weight: 500;
       transition: 0.2s ease;
+      cursor: pointer;
     }
-
-    .menu a:hover,
-    .menu a.active {
+    .menu a:hover, .menu a.active {
       background: linear-gradient(135deg, rgba(198, 107, 61, 0.12), rgba(36, 76, 69, 0.08));
       transform: translateX(2px);
     }
-
-    .main {
-      padding: 24px;
-    }
-
+    .main { padding: 24px; }
     .topbar {
-      display: flex;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) auto;
+      gap: 18px;
       align-items: center;
-      justify-content: space-between;
       margin-bottom: 22px;
-      flex-wrap: wrap;
     }
-
-    .search,
-    .profile-chip,
-    .stats-card,
-    .panel {
+    .search, .profile-chip, .stats-card, .panel, .metric {
       background: var(--panel);
       backdrop-filter: blur(10px);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
     }
-
     .search {
-      flex: 1 1 360px;
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 16px 18px;
       border-radius: 20px;
     }
-
-    .search input,
-    .control,
-    .quick-form input,
-    .quick-form select,
-    .quick-form textarea {
+    .search input, .control, .quick-form input, .quick-form select, .quick-form textarea {
       border: 1px solid rgba(110, 71, 43, 0.14);
       background: #fff;
       border-radius: 14px;
       font: inherit;
       color: var(--text);
     }
-
     .search input {
       border: none;
       outline: none;
       flex: 1;
       background: transparent;
-      font-size: 0.98rem;
     }
-
     .profile-chip {
       display: flex;
       align-items: center;
@@ -181,7 +123,6 @@
       padding: 12px 16px;
       border-radius: 20px;
     }
-
     .avatar {
       width: 48px;
       height: 48px;
@@ -192,29 +133,16 @@
       place-items: center;
       font-weight: 700;
     }
-
-    .profile-chip strong,
-    .profile-chip span {
-      display: block;
-    }
-
-    .profile-chip span {
-      color: var(--muted);
-      font-size: 0.84rem;
-      margin-top: 3px;
-    }
-
+    .view { display: none; }
+    .view.active { display: block; }
     .hero {
       display: grid;
-      grid-template-columns: 1.6fr 1fr;
+      grid-template-columns: 1.5fr 1fr;
       gap: 18px;
       margin-bottom: 18px;
     }
-
     .hero-card {
-      background:
-        linear-gradient(135deg, rgba(198, 107, 61, 0.96), rgba(157, 79, 40, 0.96)),
-        linear-gradient(135deg, #c66b3d, #9d4f28);
+      background: linear-gradient(135deg, rgba(198, 107, 61, 0.96), rgba(157, 79, 40, 0.96));
       color: #fff;
       border-radius: var(--radius-lg);
       padding: 28px;
@@ -222,7 +150,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .hero-card::after {
       content: "";
       position: absolute;
@@ -232,27 +159,18 @@
       border-radius: 50%;
       background: rgba(255,255,255,0.12);
     }
-
-    .hero-card h2,
-    .hero-card p {
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-
+    .hero-card h2, .hero-card p { position: relative; z-index: 1; margin: 0; }
     .hero-card h2 {
       font-size: clamp(1.8rem, 3vw, 2.6rem);
       line-height: 1.05;
       max-width: 480px;
       margin-bottom: 12px;
     }
-
     .hero-card p {
       max-width: 520px;
       color: rgba(255,255,255,0.82);
       font-size: 0.98rem;
     }
-
     .hero-actions {
       margin-top: 22px;
       display: flex;
@@ -261,7 +179,6 @@
       position: relative;
       z-index: 1;
     }
-
     .btn {
       border: none;
       border-radius: 16px;
@@ -270,45 +187,33 @@
       font-weight: 600;
       cursor: pointer;
       transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-light {
-      background: #fff5ec;
-      color: var(--primary-dark);
-    }
-
-    .btn-dark {
-      background: rgba(36, 76, 69, 0.9);
-      color: #fff;
-    }
-
-    .stats-grid {
+    .btn:hover { transform: translateY(-1px); }
+    .btn-light { background: #fff5ec; color: var(--primary-dark); }
+    .btn-dark { background: rgba(36, 76, 69, 0.9); color: #fff; }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; }
+    .stats-grid, .card-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 18px;
     }
-
-    .stats-card {
+    .stats-card, .metric {
       border-radius: 24px;
       padding: 20px;
     }
-
-    .stats-card small {
+    .stats-card small, .metric small {
       color: var(--muted);
       font-size: 0.82rem;
     }
-
-    .stats-card strong {
+    .stats-card strong, .metric strong {
       display: block;
       font-size: 1.9rem;
       margin: 10px 0 8px;
     }
-
-    .stats-card .chip {
+    .chip {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -319,19 +224,16 @@
       font-size: 0.78rem;
       font-weight: 600;
     }
-
-    .content-grid {
+    .content-grid, .dual-grid {
       display: grid;
       grid-template-columns: 1.55fr 0.95fr;
       gap: 18px;
     }
-
     .panel {
       border-radius: var(--radius-lg);
       padding: 22px;
     }
-
-    .panel-header {
+    .panel-header, .table-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -339,42 +241,20 @@
       margin-bottom: 18px;
       flex-wrap: wrap;
     }
-
-    .panel-header h3,
-    .panel-header p {
-      margin: 0;
-    }
-
-    .panel-header p {
+    .panel-header p, .section-head p {
       color: var(--muted);
       font-size: 0.9rem;
       margin-top: 4px;
     }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .control {
-      padding: 11px 13px;
-      min-width: 160px;
-      outline: none;
-    }
-
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; }
+    .control { padding: 11px 13px; min-width: 160px; outline: none; }
     #calendar {
       background: var(--panel-strong);
       border-radius: 22px;
       padding: 14px;
       border: 1px solid rgba(110, 71, 43, 0.08);
     }
-
-    .fc-toolbar h2 {
-      font-size: 1.15rem;
-      color: var(--text);
-    }
-
+    .fc-toolbar h2 { font-size: 1.15rem; color: var(--text); }
     .fc button {
       background: #fff;
       border: 1px solid rgba(110, 71, 43, 0.12);
@@ -383,23 +263,10 @@
       border-radius: 12px;
       text-transform: capitalize;
     }
-
-    .fc-event {
-      border: none;
-      padding: 4px 6px;
-      border-radius: 10px;
-    }
-
-    .fc-event, .fc-event-dot {
-      background: linear-gradient(135deg, var(--accent), #3d746b);
-    }
-
-    .list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .item {
+    .fc-event { border: none; padding: 4px 6px; border-radius: 10px; }
+    .fc-event, .fc-event-dot { background: linear-gradient(135deg, var(--accent), #3d746b); }
+    .list { display: grid; gap: 12px; }
+    .item, .note-card {
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -409,18 +276,9 @@
       background: rgba(255,255,255,0.72);
       border: 1px solid rgba(110, 71, 43, 0.09);
     }
-
-    .item strong,
-    .item span {
-      display: block;
-    }
-
-    .item span {
-      color: var(--muted);
-      font-size: 0.84rem;
-      margin-top: 4px;
-    }
-
+    .note-card { display: block; }
+    .item strong, .item span { display: block; }
+    .item span { color: var(--muted); font-size: 0.84rem; margin-top: 4px; }
     .badge {
       padding: 8px 10px;
       border-radius: 999px;
@@ -428,86 +286,53 @@
       font-weight: 700;
       white-space: nowrap;
     }
-
-    .badge.success {
-      background: rgba(47, 125, 98, 0.14);
-      color: var(--success);
-    }
-
-    .badge.warning {
-      background: rgba(210, 138, 45, 0.15);
-      color: var(--warning);
-    }
-
-    .quick-form {
-      display: grid;
-      gap: 12px;
-    }
-
-    .quick-form input,
-    .quick-form select,
-    .quick-form textarea {
+    .success { background: rgba(47, 125, 98, 0.14); color: var(--success); }
+    .warning { background: rgba(210, 138, 45, 0.15); color: var(--warning); }
+    .danger { background: rgba(186, 91, 91, 0.15); color: var(--danger); }
+    .quick-form { display: grid; gap: 12px; }
+    .quick-form input, .quick-form select, .quick-form textarea {
       width: 100%;
       padding: 12px 14px;
       outline: none;
     }
-
     .quick-form textarea {
       min-height: 108px;
       resize: vertical;
     }
-
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      text-align: left;
+      padding: 14px 10px;
+      border-bottom: 1px solid rgba(110, 71, 43, 0.09);
+    }
+    th {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
     .footer-note {
       margin-top: 16px;
       color: var(--muted);
       font-size: 0.84rem;
       text-align: center;
     }
-
     @media (max-width: 1180px) {
-      .hero,
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
+      .hero, .content-grid, .dual-grid { grid-template-columns: 1fr; }
     }
-
     @media (max-width: 940px) {
-      .shell {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: static;
-        height: auto;
-      }
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .topbar { grid-template-columns: 1fr; }
     }
-
     @media (max-width: 680px) {
-      .main {
-        padding: 16px;
-      }
-
-      .sidebar {
-        padding: 20px 16px;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar,
-      .panel-header {
-        align-items: stretch;
-      }
-
-      .profile-chip,
-      .search {
-        width: 100%;
-      }
+      .main { padding: 16px; }
+      .sidebar { padding: 20px 16px; }
+      .stats-grid, .card-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  <p>Yönlendiriliyor... Eğer otomatik açılmazsa <a href="index.php">buraya tıkla</a>.</p>
   <div class="shell">
     <aside class="sidebar">
       <div class="brand">
@@ -520,19 +345,19 @@
 
       <div class="menu-title">Panel</div>
       <nav class="menu">
-        <a class="active" href="#"><i class="fa-regular fa-calendar-days"></i> Randevu Takvimi</a>
-        <a href="#"><i class="fa-regular fa-address-book"></i> Müşteriler</a>
-        <a href="#"><i class="fa-solid fa-wand-magic-sparkles"></i> Hizmetler</a>
-        <a href="#"><i class="fa-solid fa-user-group"></i> Personeller</a>
-        <a href="#"><i class="fa-solid fa-cash-register"></i> Satış Takibi</a>
-        <a href="#"><i class="fa-regular fa-chart-bar"></i> Raporlar</a>
+        <a class="nav-link active" data-view="dashboard"><i class="fa-regular fa-calendar-days"></i> Randevu Takvimi</a>
+        <a class="nav-link" data-view="customers"><i class="fa-regular fa-address-book"></i> Müşteriler</a>
+        <a class="nav-link" data-view="services"><i class="fa-solid fa-wand-magic-sparkles"></i> Hizmetler</a>
+        <a class="nav-link" data-view="staff"><i class="fa-solid fa-user-group"></i> Personeller</a>
+        <a class="nav-link" data-view="sales"><i class="fa-solid fa-cash-register"></i> Satış Takibi</a>
+        <a class="nav-link" data-view="reports"><i class="fa-regular fa-chart-bar"></i> Raporlar</a>
       </nav>
 
       <div class="menu-title">Hızlı İşlem</div>
       <nav class="menu">
-        <a href="#quick-form"><i class="fa-solid fa-plus"></i> Yeni Randevu</a>
-        <a href="#"><i class="fa-solid fa-bell-concierge"></i> Salon Notları</a>
-        <a href="#"><i class="fa-solid fa-gear"></i> Ayarlar</a>
+        <a class="nav-link" data-view="new-appointment"><i class="fa-solid fa-plus"></i> Yeni Randevu</a>
+        <a class="nav-link" data-view="notes"><i class="fa-solid fa-bell-concierge"></i> Salon Notları</a>
+        <a class="nav-link" data-view="settings"><i class="fa-solid fa-gear"></i> Ayarlar</a>
       </nav>
     </aside>
 
@@ -542,7 +367,6 @@
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder="Müşteri, personel veya hizmet ara">
         </label>
-
         <div class="profile-chip">
           <div class="avatar">OU</div>
           <div>
@@ -552,121 +376,267 @@
         </div>
       </div>
 
-      <section class="hero">
-        <article class="hero-card">
-          <h2>Salon Kayıt Cepte ile günlük akışı tek ekranda yönetin.</h2>
-          <p>Takvim, müşteri trafiği ve yeni randevu oluşturma alanını aynı panelde tutarak operasyonu daha düzenli ve daha modern hale getirir.</p>
-          <div class="hero-actions">
-            <button class="btn btn-light">Bugünkü Randevular</button>
-            <button class="btn btn-dark">Yeni Randevu Oluştur</button>
-          </div>
-        </article>
+      <section id="dashboard" class="view active">
+        <div class="hero">
+          <article class="hero-card">
+            <h2>Salon akışını tek ekranda yönet.</h2>
+            <p>Bugünkü randevuları, yaklaşan müşterileri ve hızlı kayıt alanlarını tek panelde görüntüleyebilirsin.</p>
+            <div class="hero-actions">
+              <button class="btn btn-light quick-nav" data-view="new-appointment"><i class="fa-solid fa-calendar-plus"></i> Yeni Randevu</button>
+              <button class="btn btn-dark quick-nav" data-view="customers"><i class="fa-solid fa-users"></i> Müşteri Listesi</button>
+            </div>
+          </article>
 
-        <div class="stats-grid">
-          <article class="stats-card">
-            <small>Bugünkü randevu</small>
-            <strong>18</strong>
-            <span class="chip"><i class="fa-solid fa-arrow-trend-up"></i> Düne göre +4</span>
+          <div class="stats-grid">
+            <article class="stats-card"><small>Bugünkü randevu</small><strong>18</strong><span class="chip"><i class="fa-solid fa-arrow-trend-up"></i> Düne göre +4</span></article>
+            <article class="stats-card"><small>Aktif müşteri</small><strong>264</strong><span class="chip"><i class="fa-solid fa-user-check"></i> Düzenli takipte</span></article>
+            <article class="stats-card"><small>Boş zaman aralığı</small><strong>6</strong><span class="chip"><i class="fa-regular fa-clock"></i> Doluluk iyi</span></article>
+            <article class="stats-card"><small>Bekleyen onay</small><strong>3</strong><span class="chip"><i class="fa-solid fa-circle-info"></i> Dönüş bekliyor</span></article>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <div class="section-head">
+                <h2>Randevu Takvimi</h2>
+                <p>Günlük görünüm</p>
+              </div>
+              <div class="controls">
+                <select class="control">
+                  <option>Personele Göre</option>
+                  <option>Hizmete Göre</option>
+                  <option>Odaya Göre</option>
+                </select>
+                <input class="control" type="date" value="2026-04-09">
+              </div>
+            </div>
+            <div id="calendar"></div>
           </article>
-          <article class="stats-card">
-            <small>Aktif müşteri</small>
-            <strong>264</strong>
-            <span class="chip"><i class="fa-solid fa-user-check"></i> Düzenli takipte</span>
-          </article>
-          <article class="stats-card">
-            <small>Boş zaman aralığı</small>
-            <strong>6</strong>
-            <span class="chip"><i class="fa-regular fa-clock"></i> Doluluk iyi seviyede</span>
-          </article>
-          <article class="stats-card">
-            <small>Bekleyen onay</small>
-            <strong>3</strong>
-            <span class="chip"><i class="fa-solid fa-circle-info"></i> Dönüş bekliyor</span>
-          </article>
+
+          <div style="display:grid; gap:18px;">
+            <article class="panel">
+              <div class="panel-header">
+                <div class="section-head">
+                  <h2>Yaklaşan Kayıtlar</h2>
+                  <p>En yakın randevular</p>
+                </div>
+              </div>
+              <div class="list">
+                <div class="item"><div><strong>Seda Korkmaz</strong><span>Cilt Bakımı • 09:00</span></div><span class="badge success">Onaylandı</span></div>
+                <div class="item"><div><strong>Gamze Yıldırım</strong><span>Saç Kesimi • 11:15</span></div><span class="badge warning">Bekliyor</span></div>
+                <div class="item"><div><strong>Dilan Kaya</strong><span>Protez Tırnak • 14:30</span></div><span class="badge success">Onaylandı</span></div>
+                <div class="item"><div><strong>Elif Yıldız</strong><span>İpek Kirpik • 18:00</span></div><span class="badge success">Planlandı</span></div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div class="section-head">
+                  <h2>Hızlı Randevu</h2>
+                  <p>Kısa ekleme alanı</p>
+                </div>
+              </div>
+              <form class="quick-form">
+                <input type="text" placeholder="Müşteri adı">
+                <select>
+                  <option>Hizmet seçin</option>
+                  <option>Saç Kesimi</option>
+                  <option>Cilt Bakımı</option>
+                  <option>Protez Tırnak</option>
+                </select>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                  <input type="date" value="2026-04-09">
+                  <input type="time" value="20:45">
+                </div>
+                <textarea placeholder="Randevu notu"></textarea>
+                <button type="button" class="btn btn-dark quick-nav" data-view="new-appointment"><i class="fa-solid fa-arrow-right"></i> Detaylı forma geç</button>
+              </form>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section class="content-grid">
-        <article class="panel">
-          <div class="panel-header">
-            <div>
-              <h3>Randevu Takvimi</h3>
-              <p>Salon Kayıt Cepte günlük görünüm</p>
+      <section id="customers" class="view">
+        <div class="panel">
+          <div class="table-head">
+            <div class="section-head">
+              <h2>Müşteriler</h2>
+              <p>Kayıtlı müşteri listesi ve son ziyaret bilgileri</p>
             </div>
-            <div class="controls">
-              <select class="control">
-                <option>Personele Göre</option>
-                <option>Hizmete Göre</option>
-                <option>Odaya Göre</option>
-              </select>
-              <input class="control" type="date" value="2026-04-09">
+            <button class="btn btn-primary quick-nav" data-view="new-appointment"><i class="fa-solid fa-user-plus"></i> Yeni Randevu Oluştur</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Ad Soyad</th>
+                <th>Telefon</th>
+                <th>Son Ziyaret</th>
+                <th>Durum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Seda Korkmaz</td><td>0555 123 45 67</td><td>07 Nisan 2026</td><td><span class="badge success">Aktif</span></td></tr>
+              <tr><td>Dilan Kaya</td><td>0554 444 22 11</td><td>09 Nisan 2026</td><td><span class="badge success">VIP</span></td></tr>
+              <tr><td>Gamze Yıldırım</td><td>0533 201 19 81</td><td>02 Nisan 2026</td><td><span class="badge warning">Yeni</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="services" class="view">
+        <div class="panel">
+          <div class="table-head">
+            <div class="section-head">
+              <h2>Hizmetler</h2>
+              <p>Salon içindeki aktif hizmetler</p>
+            </div>
+            <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Hizmet Ekle</button>
+          </div>
+          <div class="card-grid">
+            <article class="metric"><small>Saç</small><strong>Saç Kesimi</strong><span class="chip">45 dk • 450 TL</span></article>
+            <article class="metric"><small>Bakım</small><strong>Cilt Bakımı</strong><span class="chip">60 dk • 900 TL</span></article>
+            <article class="metric"><small>El & Tırnak</small><strong>Protez Tırnak</strong><span class="chip">90 dk • 1.250 TL</span></article>
+            <article class="metric"><small>Kirpik</small><strong>İpek Kirpik</strong><span class="chip">75 dk • 1.100 TL</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="staff" class="view">
+        <div class="panel">
+          <div class="table-head">
+            <div class="section-head">
+              <h2>Personeller</h2>
+              <p>Vardiya ve doluluk özeti</p>
             </div>
           </div>
-          <div id="calendar"></div>
-        </article>
+          <div class="list">
+            <div class="item"><div><strong>Merve Taş</strong><span>Saç Uzmanı • 09:00 - 18:00</span></div><span class="badge success">Doluluk %82</span></div>
+            <div class="item"><div><strong>Ece Demir</strong><span>Cilt Uzmanı • 10:00 - 19:00</span></div><span class="badge success">Doluluk %76</span></div>
+            <div class="item"><div><strong>Selin Arı</strong><span>Nail Artist • 12:00 - 20:00</span></div><span class="badge warning">Doluluk %91</span></div>
+          </div>
+        </div>
+      </section>
 
-        <div style="display:grid; gap:18px;">
+      <section id="sales" class="view">
+        <div class="panel">
+          <div class="table-head">
+            <div class="section-head">
+              <h2>Satış Takibi</h2>
+              <p>Günlük satış ve tahsilat özeti</p>
+            </div>
+          </div>
+          <div class="card-grid">
+            <article class="metric"><small>Günlük Tahsilat</small><strong>18.450 TL</strong><span class="chip"><i class="fa-solid fa-wallet"></i> Güncel veri</span></article>
+            <article class="metric"><small>Kart Ödeme</small><strong>11.200 TL</strong><span class="chip"><i class="fa-solid fa-credit-card"></i> Banka POS</span></article>
+            <article class="metric"><small>Nakit Ödeme</small><strong>4.750 TL</strong><span class="chip"><i class="fa-solid fa-money-bill"></i> Kasa</span></article>
+            <article class="metric"><small>Bekleyen Ödeme</small><strong>2.500 TL</strong><span class="chip"><i class="fa-solid fa-hourglass-half"></i> Tahsil edilecek</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports" class="view">
+        <div class="panel">
+          <div class="table-head">
+            <div class="section-head">
+              <h2>Raporlar</h2>
+              <p>Salon performans göstergeleri</p>
+            </div>
+          </div>
+          <div class="card-grid">
+            <article class="metric"><small>Haftalık Doluluk</small><strong>%78</strong><span class="chip"><i class="fa-solid fa-chart-line"></i> Artış eğilimi</span></article>
+            <article class="metric"><small>Yeni Müşteri</small><strong>14 kayıt</strong><span class="chip"><i class="fa-solid fa-user-plus"></i> Bu hafta</span></article>
+            <article class="metric"><small>En Çok Satılan Hizmet</small><strong>Cilt Bakımı</strong><span class="chip"><i class="fa-solid fa-star"></i> Öne çıkan</span></article>
+            <article class="metric"><small>İptal Oranı</small><strong>%4</strong><span class="chip"><i class="fa-solid fa-shield"></i> Normal seviye</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="new-appointment" class="view">
+        <div class="dual-grid">
           <article class="panel">
             <div class="panel-header">
-              <div>
-                <h3>Yaklaşan Kayıtlar</h3>
-                <p>En yakın randevu hareketleri</p>
-              </div>
-            </div>
-            <div class="list">
-              <div class="item">
-                <div>
-                  <strong>Örnek Müşteri</strong>
-                  <span>Saç bakımı • 20:45</span>
-                </div>
-                <span class="badge success">Onaylı</span>
-              </div>
-              <div class="item">
-                <div>
-                  <strong>Dilan Kaya</strong>
-                  <span>Cilt bakımı • 21:15</span>
-                </div>
-                <span class="badge warning">Bekliyor</span>
-              </div>
-              <div class="item">
-                <div>
-                  <strong>Elif Yıldız</strong>
-                  <span>Manikür • 22:00</span>
-                </div>
-                <span class="badge success">Planlandı</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="panel" id="quick-form">
-            <div class="panel-header">
-              <div>
-                <h3>Hızlı Randevu Ekle</h3>
-                <p>Özgünleştirilmiş kısa form</p>
+              <div class="section-head">
+                <h2>Yeni Randevu</h2>
+                <p>Hızlı çalışan temel kayıt formu</p>
               </div>
             </div>
             <form class="quick-form">
-              <input type="text" placeholder="Müşteri adı">
-              <select>
-                <option>Hizmet seçin</option>
-                <option>Saç Kesimi</option>
-                <option>Cilt Bakımı</option>
-                <option>Protez Tırnak</option>
-              </select>
+              <input type="text" placeholder="Müşteri adı soyadı">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <input type="tel" placeholder="Telefon">
+                <select>
+                  <option>Personel seçin</option>
+                  <option>Merve Taş</option>
+                  <option>Ece Demir</option>
+                  <option>Selin Arı</option>
+                </select>
+              </div>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                 <input type="date" value="2026-04-09">
-                <input type="time" value="20:45">
+                <input type="time" value="14:30">
               </div>
-              <textarea placeholder="Randevu notu"></textarea>
-              <button type="button" class="btn btn-dark">Randevuyu Kaydet</button>
+              <select>
+                <option>Hizmet seçin</option>
+                <option>Saç Kesimi - 450 TL</option>
+                <option>Cilt Bakımı - 900 TL</option>
+                <option>Protez Tırnak - 1.250 TL</option>
+              </select>
+              <textarea placeholder="Personel notu"></textarea>
+              <button class="btn btn-primary" type="button"><i class="fa-solid fa-calendar-check"></i> Randevuyu Kaydet</button>
             </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <div class="section-head">
+                <h2>Bugünkü Uygun Saatler</h2>
+                <p>Örnek boş aralıklar</p>
+              </div>
+            </div>
+            <div class="list">
+              <div class="item"><div><strong>10:00 - 10:45</strong><span>Merve Taş</span></div><span class="badge success">Boş</span></div>
+              <div class="item"><div><strong>13:00 - 14:00</strong><span>Ece Demir</span></div><span class="badge success">Boş</span></div>
+              <div class="item"><div><strong>17:30 - 18:15</strong><span>Selin Arı</span></div><span class="badge warning">Kısıtlı</span></div>
+            </div>
           </article>
         </div>
       </section>
 
-      <div class="footer-note">
-        Salon Kayıt Cepte arayüz taslağı • Marka dili ve yerleşim özgünleştirildi
-      </div>
+      <section id="notes" class="view">
+        <div class="panel">
+          <div class="table-head">
+            <div class="section-head">
+              <h2>Salon Notları</h2>
+              <p>Ekip içi hızlı not alanı</p>
+            </div>
+          </div>
+          <div class="list">
+            <div class="note-card">Yarın kampanya mesajı gönderilecek müşteri listesi hazırlanmalı.</div>
+            <div class="note-card">Cumartesi vardiyası için ek personel planlaması yapılacak.</div>
+            <div class="note-card">Instagram’dan gelen yeni müşteri talepleri tek ekranda toplanacak.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="settings" class="view">
+        <div class="panel">
+          <div class="table-head">
+            <div class="section-head">
+              <h2>Ayarlar</h2>
+              <p>Salon sistem bilgileri</p>
+            </div>
+          </div>
+          <div class="card-grid">
+            <article class="metric"><small>Salon Adı</small><strong>Salon Kayıt Cepte</strong><span class="chip"><i class="fa-solid fa-sliders"></i> Düzenlenebilir alan</span></article>
+            <article class="metric"><small>Randevu Aralığı</small><strong>15 dakika</strong><span class="chip"><i class="fa-solid fa-clock"></i> Takvim ayarı</span></article>
+            <article class="metric"><small>Para Birimi</small><strong>TRY</strong><span class="chip"><i class="fa-solid fa-money-check-dollar"></i> Finans ayarı</span></article>
+            <article class="metric"><small>SMS Bildirimi</small><strong>Açık</strong><span class="chip"><i class="fa-solid fa-message"></i> Bildirim ayarı</span></article>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer-note">Salon Kayıt Cepte • Tüm sekmeler tek dosya `index.html` içinde aktif</div>
     </main>
   </div>
 
@@ -675,6 +645,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/tr.js"></script>
   <script>
+    function activateView(viewId) {
+      document.querySelectorAll(".view").forEach(function(section) {
+        section.classList.toggle("active", section.id === viewId);
+      });
+
+      document.querySelectorAll(".nav-link").forEach(function(link) {
+        link.classList.toggle("active", link.dataset.view === viewId);
+      });
+    }
+
+    document.querySelectorAll(".nav-link, .quick-nav").forEach(function(link) {
+      link.addEventListener("click", function() {
+        var viewId = this.dataset.view;
+        activateView(viewId);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
     $(function () {
       $("#calendar").fullCalendar({
         locale: "tr",
@@ -699,23 +687,10 @@
           day: "Gün"
         },
         events: [
-          {
-            title: "Örnek Müşteri • Saç Bakımı",
-            start: "2026-04-09T20:45:00",
-            end: "2026-04-09T21:45:00"
-          },
-          {
-            title: "Dilan Kaya • Cilt Bakımı",
-            start: "2026-04-09T21:15:00",
-            end: "2026-04-09T22:00:00",
-            color: "#c66b3d"
-          },
-          {
-            title: "Elif Yıldız • Manikür",
-            start: "2026-04-09T22:00:00",
-            end: "2026-04-09T22:45:00",
-            color: "#2f7d62"
-          }
+          { title: "Seda Korkmaz • Cilt Bakımı", start: "2026-04-09T09:00:00", end: "2026-04-09T10:00:00" },
+          { title: "Gamze Yıldırım • Saç Kesimi", start: "2026-04-09T11:15:00", end: "2026-04-09T12:00:00", color: "#c66b3d" },
+          { title: "Dilan Kaya • Protez Tırnak", start: "2026-04-09T14:30:00", end: "2026-04-09T16:00:00", color: "#2f7d62" },
+          { title: "Elif Yıldız • İpek Kirpik", start: "2026-04-09T18:00:00", end: "2026-04-09T19:15:00", color: "#9d4f28" }
         ]
       });
     });
